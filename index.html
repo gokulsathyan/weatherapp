@@ -35,7 +35,8 @@
                             </div>
                             <div class="col-lg-6 m-2">
                                 <button type="button" class="btn btn-primary" onClick="searchData()">Search</button>
-                                <button type="button" class="btn btn-primary">Access current location</button>
+                                <button type="button" class="btn btn-primary" onClick="getLocation()">Access current
+                                    location</button>
                             </div>
 
                         </div>
@@ -100,6 +101,9 @@
 </body>
 
 <script>
+    latitude = '';
+    longitude = '';
+    getLocation();
     function searchData() {
         l = locationname.value;
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${l}&appid=b41ec3be35c7dac8aabbc21ba253137a`).then(result => result.json())
@@ -113,7 +117,37 @@
             var temp_min = data.main.temp_min;
             var humidity = data.main.humidity;
             var wind = data.wind.speed;
-            console.log(temp)
+
+            location_label.innerHTML = `${location}`;
+            date_label.innerHTML = `${date}`;
+            temp_label.innerHTML = `${temp}°C`;
+            temp_max_label.innerHTML = `${temp_max}`;
+            temp_min_label.innerHTML = `${temp_min}`;
+            humidity_label.innerHTML = `${humidity}`;
+            wind_label.innerHTML = `${wind}`;
+        }
+    }
+
+    function getLocation() {
+        navigator.geolocation.getCurrentPosition(showPosition);
+
+    }
+
+    function showPosition(position) {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=b41ec3be35c7dac8aabbc21ba253137a`).then(result => result.json())
+            .then(outdata => displayData((outdata)));
+
+        function displayData(data) {
+            var location = data.name;
+            var date = new Date().toLocaleString();
+            var temp = data.main.temp;
+            var temp_max = data.main.temp_max;
+            var temp_min = data.main.temp_min;
+            var humidity = data.main.humidity;
+            var wind = data.wind.speed;
 
             location_label.innerHTML = `${location}`;
             date_label.innerHTML = `${date}`;
