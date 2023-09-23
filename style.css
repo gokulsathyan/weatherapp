@@ -1,0 +1,22 @@
+/* .main-section {
+    background-image: url("./images/weather.jpg");
+    width: 100%;
+   } */
+
+body {
+    /* background: #8b8888; */
+    background-image: url("./images/weather.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.temp {
+    font-size: 200px;
+}
+
+.icons {
+    font-size: 50px;
+}
